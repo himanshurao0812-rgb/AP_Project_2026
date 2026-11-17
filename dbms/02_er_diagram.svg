@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1190 1000" width="1190" height="1000">
+  <title>TalkArena ER diagram (team T0122), 11 entities, BCNF</title>
+  <style>
+    .box   { fill: #ffffff; stroke: #2d4a7a; stroke-width: 1.5; }
+    .hd    { fill: #2d4a7a; }
+    .sep   { stroke: #2d4a7a; stroke-width: 1; }
+    .title { font: bold 14px sans-serif; fill: #ffffff; }
+    .attr  { font: 12px monospace; fill: #222222; }
+    .pk    { fill: #b00020; font-weight: bold; }
+    .fk    { fill: #1565c0; font-weight: bold; }
+    .uq    { fill: #2e7d32; font-weight: bold; }
+    .rel   { stroke: #7a7a7a; stroke-width: 1.5; fill: none; }
+    .legend { font: 12px sans-serif; fill: #222222; }
+    .legend-h { font: bold 14px sans-serif; fill: #222222; }
+  </style>
+
+  <rect x="0" y="0" width="1190" height="1000" fill="#fafafa"/>
+  <text x="40" y="26" class="legend-h">TalkArena: database ER diagram (11 tables, all BCNF)</text>
+
+  <!-- ===== Relationship lines (drawn first, so boxes sit on top) ===== -->
+  <line class="rel" x1="155" y1="207" x2="155" y2="300"/>  <!-- users - rooms (host) -->
+  <line class="rel" x1="155" y1="124" x2="450" y2="367"/>  <!-- users - room_members -->
+  <line class="rel" x1="450" y1="90"  x2="155" y2="409"/>  <!-- topics - rooms -->
+  <line class="rel" x1="745" y1="90"  x2="155" y2="409"/>  <!-- discussion_modes - rooms -->
+  <line class="rel" x1="745" y1="90"  x2="1040" y2="107"/> <!-- discussion_modes - ai_personas -->
+  <line class="rel" x1="1040" y1="107" x2="1040" y2="341"/> <!-- ai_personas - room_ai_persona -->
+  <line class="rel" x1="155" y1="409" x2="1040" y2="341"/> <!-- rooms - room_ai_persona -->
+  <line class="rel" x1="155" y1="409" x2="450" y2="367"/>  <!-- rooms - room_members -->
+  <line class="rel" x1="155" y1="409" x2="745" y2="375"/>  <!-- rooms - messages -->
+  <line class="rel" x1="155" y1="124" x2="745" y2="375"/>  <!-- users - messages (author) -->
+  <line class="rel" x1="1040" y1="107" x2="745" y2="375"/> <!-- ai_personas - messages (persona) -->
+  <line class="rel" x1="745" y1="375" x2="745" y2="560"/>  <!-- messages - fact_checks -->
+  <line class="rel" x1="155" y1="409" x2="155" y2="560"/>  <!-- rooms - video_sessions -->
+  <line class="rel" x1="155" y1="627" x2="450" y2="618"/>  <!-- video_sessions - video_participants -->
+
+  <!-- ===== users (40,40) ===== -->
+  <rect class="box" x="40" y="40" width="230" height="167" rx="4"/>
+  <rect class="hd" x="40" y="40" width="230" height="34" rx="4"/>
+  <text class="title" x="50" y="63">users</text>
+  <line class="sep" x1="40" y1="74" x2="270" y2="74"/>
+  <text class="attr" x="50" y="92"><tspan class="pk">PK</tspan> user_id</text>
+  <text class="attr" x="50" y="109"><tspan class="uq">UQ</tspan> handle</text>
+  <text class="attr" x="50" y="126"><tspan class="uq">UQ</tspan> email</text>
+  <text class="attr" x="50" y="143">full_name</text>
+  <text class="attr" x="50" y="160">password_hash</text>
+  <text class="attr" x="50" y="177">created_at</text>
+  <text class="attr" x="50" y="194">is_active</text>
+
+  <!-- ===== topics (335,40) ===== -->
+  <rect class="box" x="335" y="40" width="230" height="99" rx="4"/>
+  <rect class="hd" x="335" y="40" width="230" height="34" rx="4"/>
+  <text class="title" x="345" y="63">topics</text>
+  <line class="sep" x1="335" y1="74" x2="565" y2="74"/>
+  <text class="attr" x="345" y="92"><tspan class="pk">PK</tspan> topic_id</text>
+  <text class="attr" x="345" y="109"><tspan class="uq">UQ</tspan> topic_name</text>
+  <text class="attr" x="345" y="126">category</text>
+
+  <!-- ===== discussion_modes (630,40) ===== -->
+  <rect class="box" x="630" y="40" width="230" height="99" rx="4"/>
+  <rect class="hd" x="630" y="40" width="230" height="34" rx="4"/>
+  <text class="title" x="640" y="63">discussion_modes</text>
+  <line class="sep" x1="630" y1="74" x2="860" y2="74"/>
+  <text class="attr" x="640" y="92"><tspan class="pk">PK</tspan> mode_id</text>
+  <text class="attr" x="640" y="109"><tspan class="uq">UQ</tspan> mode_name</text>
+  <text class="attr" x="640" y="126">description</text>
+
+  <!-- ===== ai_personas (925,40) ===== -->
+  <rect class="box" x="925" y="40" width="230" height="133" rx="4"/>
+  <rect class="hd" x="925" y="40" width="230" height="34" rx="4"/>
+  <text class="title" x="935" y="63">ai_personas</text>
+  <line class="sep" x1="925" y1="74" x2="1155" y2="74"/>
+  <text class="attr" x="935" y="92"><tspan class="pk">PK</tspan> persona_id</text>
+  <text class="attr" x="935" y="109"><tspan class="fk">FK</tspan> mode_id</text>
+  <text class="attr" x="935" y="126">persona_name</text>
+  <text class="attr" x="935" y="143">model_name</text>
+  <text class="attr" x="935" y="160">system_prompt</text>
+
+  <!-- ===== rooms (40,300) ===== -->
+  <rect class="box" x="40" y="300" width="230" height="218" rx="4"/>
+  <rect class="hd" x="40" y="300" width="230" height="34" rx="4"/>
+  <text class="title" x="50" y="323">rooms</text>
+  <line class="sep" x1="40" y1="334" x2="270" y2="334"/>
+  <text class="attr" x="50" y="352"><tspan class="pk">PK</tspan> room_id</text>
+  <text class="attr" x="50" y="369"><tspan class="fk">FK</tspan> host_user_id</text>
+  <text class="attr" x="50" y="386"><tspan class="fk">FK</tspan> topic_id</text>
+  <text class="attr" x="50" y="403"><tspan class="fk">FK</tspan> mode_id</text>
+  <text class="attr" x="50" y="420">room_name</text>
+  <text class="attr" x="50" y="437"><tspan class="uq">UQ</tspan> invite_code</text>
+  <text class="attr" x="50" y="454">ai_enabled</text>
+  <text class="attr" x="50" y="471">status</text>
+  <text class="attr" x="50" y="488">created_at</text>
+  <text class="attr" x="50" y="505">ended_at</text>
+
+  <!-- ===== room_members (335,300) ===== -->
+  <rect class="box" x="335" y="300" width="230" height="133" rx="4"/>
+  <rect class="hd" x="335" y="300" width="230" height="34" rx="4"/>
+  <text class="title" x="345" y="323">room_members</text>
+  <line class="sep" x1="335" y1="334" x2="565" y2="334"/>
+  <text class="attr" x="345" y="352"><tspan class="pk">PK</tspan><tspan class="fk">FK</tspan> room_id</text>
+  <text class="attr" x="345" y="369"><tspan class="pk">PK</tspan><tspan class="fk">FK</tspan> user_id</text>
+  <text class="attr" x="345" y="386">role</text>
+  <text class="attr" x="345" y="403">joined_at</text>
+  <text class="attr" x="345" y="420">left_at</text>
+
+  <!-- ===== messages (630,300) ===== -->
+  <rect class="box" x="630" y="300" width="230" height="150" rx="4"/>
+  <rect class="hd" x="630" y="300" width="230" height="34" rx="4"/>
+  <text class="title" x="640" y="323">messages</text>
+  <line class="sep" x1="630" y1="334" x2="860" y2="334"/>
+  <text class="attr" x="640" y="352"><tspan class="pk">PK</tspan> message_id</text>
+  <text class="attr" x="640" y="369"><tspan class="fk">FK</tspan> room_id</text>
+  <text class="attr" x="640" y="386"><tspan class="fk">FK</tspan> author_user_id (null)</text>
+  <text class="attr" x="640" y="403"><tspan class="fk">FK</tspan> persona_id (null)</text>
+  <text class="attr" x="640" y="420">body</text>
+  <text class="attr" x="640" y="437">sent_at</text>
+
+  <!-- ===== room_ai_persona (925,300) ===== -->
+  <rect class="box" x="925" y="300" width="230" height="82" rx="4"/>
+  <rect class="hd" x="925" y="300" width="230" height="34" rx="4"/>
+  <text class="title" x="935" y="323">room_ai_persona</text>
+  <line class="sep" x1="925" y1="334" x2="1155" y2="334"/>
+  <text class="attr" x="935" y="352"><tspan class="pk">PK</tspan><tspan class="fk">FK</tspan> room_id</text>
+  <text class="attr" x="935" y="369"><tspan class="pk">PK</tspan><tspan class="fk">FK</tspan> persona_id</text>
+
+  <!-- ===== video_sessions (40,560) ===== -->
+  <rect class="box" x="40" y="560" width="230" height="133" rx="4"/>
+  <rect class="hd" x="40" y="560" width="230" height="34" rx="4"/>
+  <text class="title" x="50" y="583">video_sessions</text>
+  <line class="sep" x1="40" y1="594" x2="270" y2="594"/>
+  <text class="attr" x="50" y="612"><tspan class="pk">PK</tspan> session_id</text>
+  <text class="attr" x="50" y="629"><tspan class="fk">FK</tspan> room_id</text>
+  <text class="attr" x="50" y="646">started_at</text>
+  <text class="attr" x="50" y="663">ended_at</text>
+  <text class="attr" x="50" y="680">recording_url</text>
+
+  <!-- ===== video_participants (335,560) ===== -->
+  <rect class="box" x="335" y="560" width="230" height="116" rx="4"/>
+  <rect class="hd" x="335" y="560" width="230" height="34" rx="4"/>
+  <text class="title" x="345" y="583">video_participants</text>
+  <line class="sep" x1="335" y1="594" x2="565" y2="594"/>
+  <text class="attr" x="345" y="612"><tspan class="pk">PK</tspan><tspan class="fk">FK</tspan> session_id</text>
+  <text class="attr" x="345" y="629"><tspan class="pk">PK</tspan><tspan class="fk">FK</tspan> user_id</text>
+  <text class="attr" x="345" y="646">joined_at</text>
+  <text class="attr" x="345" y="663">left_at</text>
+
+  <!-- ===== fact_checks (630,560) ===== -->
+  <rect class="box" x="630" y="560" width="230" height="167" rx="4"/>
+  <rect class="hd" x="630" y="560" width="230" height="34" rx="4"/>
+  <text class="title" x="640" y="583">fact_checks</text>
+  <line class="sep" x1="630" y1="594" x2="860" y2="594"/>
+  <text class="attr" x="640" y="612"><tspan class="pk">PK</tspan> check_id</text>
+  <text class="attr" x="640" y="629"><tspan class="fk">FK</tspan> message_id</text>
+  <text class="attr" x="640" y="646"><tspan class="fk">FK</tspan> persona_id (null)</text>
+  <text class="attr" x="640" y="663">claim_text</text>
+  <text class="attr" x="640" y="680">verdict</text>
+  <text class="attr" x="640" y="697">source_url</text>
+  <text class="attr" x="640" y="714">checked_at</text>
+
+  <!-- ===== Legend ===== -->
+  <text x="40" y="772" class="legend-h">Relationships and cardinality (all of them; the lines above show the main links)</text>
+  <text x="40" y="794" class="legend">1:N   users to rooms (host_user_id)</text>
+  <text x="40" y="811" class="legend">M:N   users to rooms, via room_members</text>
+  <text x="40" y="828" class="legend">1:N   users to messages (author_user_id, nullable)</text>
+  <text x="40" y="845" class="legend">M:N   users to video_sessions, via video_participants</text>
+  <text x="40" y="862" class="legend">1:N   topics to rooms</text>
+  <text x="40" y="879" class="legend">1:N   discussion_modes to rooms</text>
+  <text x="40" y="896" class="legend">1:N   discussion_modes to ai_personas</text>
+  <text x="40" y="913" class="legend">1:N   rooms to room_members</text>
+  <text x="40" y="930" class="legend">1:N   rooms to messages</text>
+
+  <text x="620" y="794" class="legend">1:N   rooms to video_sessions</text>
+  <text x="620" y="811" class="legend">M:N   rooms to ai_personas, via room_ai_persona</text>
+  <text x="620" y="828" class="legend">1:N   ai_personas to messages (persona_id, nullable)</text>
+  <text x="620" y="845" class="legend">1:N   ai_personas to fact_checks (persona_id, nullable)</text>
+  <text x="620" y="862" class="legend">1:N   messages to fact_checks</text>
+  <text x="620" y="879" class="legend">1:N   video_sessions to video_participants</text>
+
+  <text x="40" y="965" class="legend">Keys: PK primary key, FK foreign key, UQ unique. Messages have exactly one author:</text>
+  <text x="40" y="982" class="legend">author_user_id (a human) or persona_id (an AI persona). Enforced by a CHECK constraint.</text>
+</svg>
